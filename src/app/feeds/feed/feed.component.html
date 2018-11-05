@@ -1,0 +1,20 @@
+<main>
+  <div *ngIf="items; else loading">
+    <ol start="{{ listStart }}">
+      <li class="post" *ngFor="let item of items; let i = index">
+        <hn-item class="item-block" [item]="item"></hn-item>
+      </li>
+    </ol>
+    <div class="nav">
+      <a *ngIf="listStart !== 1" [routerLink]="['/' + feedType, pageNum - 1]" class="prev">< Prev</a>
+      <a *ngIf="items.length === 30" [routerLink]="['/' + feedType, pageNum + 1]" class="more">More ></a>
+    </div>
+  </div>
+  <ng-template #loading>
+    <div class="loading-section">
+      <div class="loader">
+        Loading...
+      </div>
+    </div>
+  </ng-template>
+</main>

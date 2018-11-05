@@ -1,0 +1,45 @@
+<p *ngIf="hasUrl">
+  <a class="title" href="{{item.url}}"  target="_blank" rel="noopener">
+    {{item.title}}
+  </a>
+  <span *ngIf="item.domain" class="domain">({{item.domain}})</span>
+</p>
+<p *ngIf="!hasUrl">
+  <a class="title" [routerLink]="['/item', item.id]">
+    {{item.title}}
+  </a>
+</p>
+<div *ngIf="item.type !== 'job'; else jobLaptop" class="subtext-laptop">
+  {{item.points}} points by
+  <a [routerLink]="['/user', item.user]">{{item.user}}</a>
+  <span class="item-details">
+    {{ item.time_ago }}
+    <a [routerLink]="['/item', item.id]">
+      {{item.comments_count | comment }}
+    </a>
+  </span>
+</div>
+<ng-template #jobLaptop>
+  <div class="subtext-laptop">
+    {{ item.time_ago }}
+  </div>
+</ng-template>
+<div *ngIf="item.type !== 'job'; else jobPalm" class="subtext-palm">
+  <div class="details">
+    <span class="name"><a [routerLink]="['/user', item.user]">{{item.user}}</a></span>
+    <span class="right">{{item.points}} ★</span>
+  </div>
+  <div class="details">
+    {{ item.time_ago }}
+    <a [routerLink]="['/item', item.id]" class="comment-number"> •
+      {{item.comments_count | comment }}
+    </a>
+  </div>
+</div>
+<ng-template #jobPalm>
+  <div class="subtext-palm">
+    <div class="details">
+      {{ item.time_ago }}
+    </div>
+  </div>
+</ng-template>

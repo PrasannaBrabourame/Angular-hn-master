@@ -1,0 +1,65 @@
+<main>
+  <div *ngIf="item; else loading" class="item">
+    <div class="laptop" [class.item-header]="item.comments_count > 0 || item.type === 'job'">
+      <p *ngIf="hasUrl">
+        <a class="title" href="{{item.url}}" target="_blank">
+          {{item.title}}
+        </a>
+        <span *ngIf="item.domain" class="domain">({{item.domain}})</span>
+      </p>
+      <p *ngIf="!hasUrl">
+        <a class="title" [routerLink]="['/item', item.id]">
+          {{item.title}}
+        </a>
+      </p>
+      <div *ngIf="item.type !== 'job'; else jobItem" class="subtext">
+        {{item.points}} points by
+        <a [routerLink]="['/user', item.user]">{{item.user}}</a>
+        <span class="item-details">
+          {{item.time_ago}}
+          <a [routerLink]="['/item', item.id]">
+            {{item.comments_count | comment }}
+          </a>
+        </span>
+      </div>
+      <ng-template #jobItem>
+        <div class="subtext">
+          {{item.time_ago}}
+        </div>
+      </ng-template>
+    </div>
+    <div class="mobile item-header">
+      <p class="title-block">
+        <span class="back-button" (click)="goBack()"></span>
+        <a *ngIf="hasUrl" class="title" href="{{item.url}}">
+          {{item.title}}
+        </a>
+        <a *ngIf="!hasUrl" class="title" [routerLink]="['/item', item.id]"
+         >
+          {{item.title}}
+        </a>
+      </p>
+    </div>
+    <div *ngIf="item.type === 'poll'" class="pollResults">
+      <div *ngFor="let pollResult of item.poll" class="pollContent">
+        <div *ngIf="pollResult.content" [innerHTML]="pollResult.content"></div>
+        <div class="subtext">{{pollResult.points}} points</div>
+        <div class="pollBar" [ngStyle]="{'width': pollResult.points/item.poll_votes_count*100+'%'}"></div>
+      </div>
+    </div>
+    <p *ngIf="item.content" class="subject" [innerHTML]="item.content"></p>
+    <ul class="comment-list">
+      <li *ngFor="let comment of item.comments" >
+        <hn-comment [comment]="comment"></hn-comment>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #loading>
+    <div class="loading-section">
+      <div class="loader">
+        Loading...
+      </div>
+    </div>
+  </ng-template>
+</main>

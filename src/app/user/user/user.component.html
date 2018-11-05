@@ -1,0 +1,23 @@
+<div *ngIf="user; else loading" class="profile">
+  <div class="mobile item-header">
+    <p class="title-block">
+      <span class="back-button" (click)="goBack()"></span>
+      Profile: {{ user.id }}
+    </p>
+  </div>
+  <div class="main-details">
+    <span class="name">{{ user.id }}</span>
+    <span class="right">{{ user.karma }} ★</span>
+    <p class="age">Created {{ user.created }}</p>
+  </div>
+  <div class="other-details" *ngIf="user.about">
+    <p [innerHTML]="user.about"></p>
+  </div>
+</div>
+<ng-template #loading>
+  <div class="loading-section">
+    <div class="loader">
+      Loading...
+    </div>
+  </div>
+</ng-template>

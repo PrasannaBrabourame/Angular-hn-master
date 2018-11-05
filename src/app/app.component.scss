@@ -1,0 +1,19 @@
+$mobile-only: "only screen and (max-width : 768px)";
+
+:host {
+  background-color: #F6F6EF;
+  position: relative;
+  width: 85%;
+  min-height: 80px;
+  margin: 0 auto;
+  font-size: 15px;
+  height: 100%;
+  min-height: inherit;
+  display: flex;
+  flex-direction: column;
+
+   @media #{$mobile-only} {
+    width: 100%;
+    background-color: #fff;
+  }
+}
